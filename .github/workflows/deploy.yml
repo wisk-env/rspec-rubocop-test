@@ -47,6 +47,7 @@ jobs:
           ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key
           echo "hello world" > test.txt
           cat test.txt
+          pwd
           git pull origin main
 
       - name: revoke Security Group
