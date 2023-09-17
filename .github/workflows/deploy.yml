@@ -36,10 +36,8 @@ jobs:
         run: |
           aws ec2 authorize-security-group-ingress --group-id ${{ secrets.SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
       
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Deploy
+        uses: actions/checkout@v2
         run: |
           # EC2作成時の公開鍵をGitHubに登録
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
