@@ -44,13 +44,10 @@ jobs:
           # EC2作成時の公開鍵をGitHubに登録
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key
+          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key "cd /home/ec2-user/stock_app && git fetch --prune && git checkout main && git pull origin main"
           echo "hello world" > test.txt
           cat test.txt
           pwd
-          cd /home/ec2-user/stock_app
-          pwd
-          git pull origin main
 
       - name: revoke Security Group
         run: |
