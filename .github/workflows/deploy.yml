@@ -42,9 +42,9 @@ jobs:
       - name: Deploy
         run: |
           # EC2作成時の公開鍵をGitHubに登録
-          echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/private_key
-          chmod 600 ~/.ssh/private_key
-          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i ~/.ssh/private_key
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key
           cd stock_app && git pull origin main"
 
       - name: revoke Security Group
