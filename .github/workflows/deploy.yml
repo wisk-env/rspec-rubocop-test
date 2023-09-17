@@ -45,7 +45,7 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" > private_key
           chmod 600 private_key
           ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key
-          cd stock_app && git pull origin main
+          cd /home/ec2-user/stock_app && git pull origin main
 
       - name: revoke Security Group
         run: |
