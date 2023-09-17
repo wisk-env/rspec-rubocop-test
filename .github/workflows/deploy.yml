@@ -14,12 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - name: Public IP Install
         id: ip
         uses: haythem/public-ip@v1.2
-
-      - name: Checkout
-        uses: actions/checkout@v3
       
       - name: AWS CLI install
         run: |
@@ -40,14 +38,16 @@ jobs:
           aws ec2 authorize-security-group-ingress --group-id ${{ secrets.SECURITY_GROUP_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
       
       - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_NAME }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          script: |
-            cd ${{ secrets.SERVER_DEPLOY_DIR }} 
-            git pull origin main
+        run: |
+          # EC2作成時の公開鍵をGitHubに登録
+          echo "${{ secrets.PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          ssh -oStrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.HOST_NAME }} -i private_key '
+          echo "hello world" > test.txt
+          cat test.txt
+          cd /home/ec2-user/stock_app && git fetch --prune && git checkout main && git pull origin main
+          pwd
+          '
 
       - name: revoke Security Group
         run: |
