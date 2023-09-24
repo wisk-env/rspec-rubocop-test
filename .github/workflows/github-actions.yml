@@ -42,18 +42,7 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-
-      - name: database setup
-        run: |
-          cp config/database.yml.ci config/database.yml
-
-      - name: database create and migrate
-        run: |
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
-        env:
-          RAILS_ENV: test
-
+          
       - name: run Rspec
         run: bundle exec rspec
 
