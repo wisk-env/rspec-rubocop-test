@@ -1,9 +1,7 @@
 test:
   adapter: mysql2
-  charset: utf8mb4
-  collation: utf8mb4_bin
-  encoding: utf8mb4
-  database: stock_app_test
-  pool: 5
+  encoding: utf8
   username: root
-  password: root
+  password:
+  host: 127.0.0.1
+  database: stock_app_test
