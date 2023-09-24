@@ -50,7 +50,9 @@ jobs:
       - name: database create and migrate
         run: |
           bundle exec rails db:create
-          bundle exec rails db:migrate
+          bundle exec rails db:schema:load
+        env:
+          RAILS_ENV: test
 
       - name: run Rspec
         run: bundle exec rspec
